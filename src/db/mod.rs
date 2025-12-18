@@ -1,5 +1,5 @@
-use std::sync::{Arc,Mutex};
 use rusqlite::Connection;
+use std::sync::{Arc, Mutex};
 
 #[derive(Clone)]
 pub struct AppState {
@@ -7,18 +7,18 @@ pub struct AppState {
 }
 
 impl AppState {
-    pub fn new()->Self{
-        let conn=Connection::open("users.db").unwrap();
+    pub fn new() -> Self {
+        let conn = Connection::open("users.db").unwrap();
 
         conn.execute("CREATE TABLE IF NOT EXISTS users (\
         id INTEGER PRIMARY KEY,\
         name TEXT NOT NULL,\
         age INTEGER NOT NULL)",
-[],
-).unwrap();
+                     [],
+        ).unwrap();
 
-AppState{
-db: Arc::new(Mutex::new(conn)),
+        AppState {
+            db: Arc::new(Mutex::new(conn)),
+        }
     }
-}
 }
